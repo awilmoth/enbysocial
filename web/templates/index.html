@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enby Social</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #kivy-app {
+            width: 900px;
+            height: 600px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6200EE;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 920px) {
+            #kivy-app {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="kivy-app">
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>Loading Enby Social...</p>
+        </div>
+        <canvas id="kivy-canvas"></canvas>
+    </div>
+
+    <script>
+        // Initialize Socket.IO
+        const socket = io();
+
+        // Initialize Kivy app
+        window.onload = function() {
+            const canvas = document.getElementById('kivy-canvas');
+            const loading = document.getElementById('loading');
+
+            // Initialize Kivy
+            window.kivy = {
+                canvas: canvas,
+                socket: socket,
+
+                // Called when Kivy app is ready
+                onReady: function() {
+                    loading.style.display = 'none';
+                    canvas.style.display = 'block';
+                },
+
+                // Called when user logs in
+                onLogin: function(token) {
+                    socket.emit('user_login', { token: token });
+                },
+
+                // Called when user logs out
+                onLogout: function() {
+                    socket.emit('user_logout');
+                },
+
+                // Send message through Socket.IO
+                sendMessage: function(message) {
+                    socket.emit('message', message);
+                }
+            };
+
+            // Socket.IO event handlers
+            socket.on('connect', () => {
+                console.log('Socket.IO connected');
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Socket.IO disconnected');
+            });
+
+            socket.on('message', (data) => {
+                // Forward message to Kivy app
+                if (window.kivy.onMessage) {
+                    window.kivy.onMessage(data);
+                }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const app = document.getElementById('kivy-app');
+                const width = app.clientWidth;
+                const height = app.clientHeight;
+                canvas.width = width;
+                canvas.height = height;
+                // Notify Kivy app of resize
+                if (window.kivy.onResize) {
+                    window.kivy.onResize(width, height);
+                }
+            });
+
+            // Handle visibility change
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    // Page is hidden
+                    if (window.kivy.onPause) {
+                        window.kivy.onPause();
+                    }
+                } else {
+                    // Page is visible
+                    if (window.kivy.onResume) {
+                        window.kivy.onResume();
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

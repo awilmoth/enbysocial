@@ -1,0 +1,80 @@
+<PersonalAdsScreen>:
+    ads_list: ads_list
+
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        # Top App Bar
+        MDTopAppBar:
+            title: "Personal Ads"
+            right_action_items: [["account", lambda x: app.root.current = 'profile'], ["message", lambda x: app.root.current = 'messages']]
+            elevation: 2
+
+        # Main Content
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(16)
+            spacing: dp(16)
+
+            # Distance Filter
+            MDBoxLayout:
+                adaptive_height: True
+                spacing: dp(10)
+                
+                MDLabel:
+                    text: "Distance:"
+                    size_hint_x: None
+                    width: dp(60)
+                    theme_text_color: "Secondary"
+                
+                MDSlider:
+                    min: 1
+                    max: 100
+                    value: root.distance_filter
+                    on_value: root.update_distance_filter(self.value)
+                
+                MDLabel:
+                    text: f"{int(root.distance_filter)} miles"
+                    size_hint_x: None
+                    width: dp(70)
+                    theme_text_color: "Secondary"
+
+            # Ads List
+            MDScrollView:
+                do_scroll_x: False
+                
+                MDList:
+                    id: ads_list
+                    spacing: dp(10)
+                    padding: dp(10)
+
+        # Create Ad Button
+        MDFloatingActionButton:
+            icon: "plus"
+            pos_hint: {"right": 0.95, "y": 0.05}
+            on_release: root.create_new_ad()
+            md_bg_color: app.theme_cls.primary_color
+
+        # Bottom Navigation
+        MDBottomNavigation:
+            panel_color: app.theme_cls.primary_color
+            selected_color_background: app.theme_cls.primary_light
+            text_color_active: app.theme_cls.primary_dark
+
+            MDBottomNavigationItem:
+                name: 'feed'
+                text: 'Feed'
+                icon: 'newspaper-variant'
+                on_tab_release: root.refresh_ads()
+
+            MDBottomNavigationItem:
+                name: 'messages'
+                text: 'Messages'
+                icon: 'message'
+                on_tab_release: app.root.current = 'messages'
+
+            MDBottomNavigationItem:
+                name: 'profile'
+                text: 'Profile'
+                icon: 'account'
+                on_tab_release: app.root.current = 'profile'

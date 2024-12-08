@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/enbysocial
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=enbysocial
+      - SECRET_KEY=your-secret-key-here
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - enbysocial-network
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - API_URL=http://backend:8000
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+      - DISPLAY=:99
+    depends_on:
+      - backend
+    networks:
+      - enbysocial-network
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=enbysocial
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - enbysocial-network
+
+volumes:
+  postgres_data:
+
+networks:
+  enbysocial-network:
+    driver: bridge

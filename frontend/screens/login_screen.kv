@@ -1,0 +1,56 @@
+<LoginScreen>:
+    username_field: username_field
+    password_field: password_field
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+
+        MDBoxLayout:
+            size_hint_y: 0.3
+            MDLabel:
+                text: "Enby Social"
+                halign: "center"
+                font_style: "H3"
+                theme_text_color: "Primary"
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            adaptive_height: True
+            spacing: dp(10)
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint_x: 0.8
+            
+            MDTextField:
+                id: username_field
+                hint_text: "Username"
+                helper_text: "Enter your username"
+                helper_text_mode: "on_error"
+                icon_right: "account"
+                required: True
+                
+            MDTextField:
+                id: password_field
+                hint_text: "Password"
+                helper_text: "Enter your password"
+                helper_text_mode: "on_error"
+                icon_right: "eye-off"
+                required: True
+                password: True
+                
+            MDRaisedButton:
+                text: "Login"
+                size_hint_x: 1
+                on_release: root.login()
+                md_bg_color: app.theme_cls.primary_color
+                
+            MDTextButton:
+                text: "Don't have an account? Register here"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                size_hint_x: 1
+                on_release: root.go_to_register()
+
+        Widget:
+            size_hint_y: 0.3

@@ -1,0 +1,188 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+.env
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Docker
+.docker/
+
+# Frontend specific
+frontend/.buildozer/
+frontend/bin/
+frontend/.kivy/
+frontend/*.kv.bak
+frontend/assets/temp/
+frontend/assets/cache/
+
+# iOS build
+*.ipa
+*.app
+*.xcodeproj/
+*.xcworkspace/
+Pods/
+build-ios/
+frontend/ios/
+
+# Android build
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+*.iml
+.gradle/
+android/
+frontend/android/
+
+# Backend specific
+backend/__pycache__/
+backend/*.pyc
+backend/static/
+backend/media/
+backend/uploads/
+backend/logs/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+coverage.xml
+.coverage.*
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+.*.swp
+.*.swo
+*~.nib
+
+# Media and uploads
+media/
+uploads/
+static/
+
+# Certificate files
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+
+# Packaging
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Dependency directories
+node_modules/
+jspm_packages/
+bower_components/
+
+# Distribution directories
+dist/
+build/
+
+# Local development
+local_settings.py
+docker-compose.override.yml
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+*.class
+*.pyc
+*.pyo
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mypy
+.mypy_cache/

@@ -1,0 +1,120 @@
+<MessagesScreen>:
+    chat_list: chat_list
+    chat_input: chat_input
+    messages_list: messages_list
+
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        # Top App Bar
+        MDTopAppBar:
+            title: "Messages"
+            elevation: 2
+            right_action_items: [["account", lambda x: app.root.current = 'profile']]
+
+        # Main Content
+        MDBoxLayout:
+            id: content_box
+            orientation: 'vertical'
+
+            # Chat List View (shown when no active chat)
+            ScrollView:
+                id: chat_list_view
+                opacity: 1 if not root.active_chat else 0
+                disabled: False if not root.active_chat else True
+
+                MDList:
+                    id: chat_list
+                    padding: dp(10)
+                    spacing: dp(5)
+
+            # Active Chat View
+            MDBoxLayout:
+                orientation: 'vertical'
+                opacity: 0 if not root.active_chat else 1
+                disabled: True if not root.active_chat else False
+
+                # Chat Header
+                MDTopAppBar:
+                    title: root.active_chat.get('user', {}).get('username', '') if root.active_chat else ''
+                    elevation: 1
+                    left_action_items: [["arrow-left", lambda x: setattr(root, 'active_chat', None)]]
+                    specific_text_color: app.theme_cls.primary_color
+
+                # Messages Area
+                ScrollView:
+                    do_scroll_x: False
+                    
+                    MDBoxLayout:
+                        id: messages_list
+                        orientation: 'vertical'
+                        adaptive_height: True
+                        padding: dp(10)
+                        spacing: dp(10)
+
+                # Input Area
+                MDBoxLayout:
+                    adaptive_height: True
+                    padding: [dp(10), dp(10), dp(10), dp(10)]
+                    spacing: dp(10)
+                    md_bg_color: app.theme_cls.bg_normal
+
+                    MDTextField:
+                        id: chat_input
+                        hint_text: "Type a message..."
+                        mode: "round"
+                        multiline: True
+                        max_height: "100dp"
+                        size_hint: 0.85, None
+                        height: max(dp(40), self.minimum_height)
+
+                    MDIconButton:
+                        icon: "send"
+                        pos_hint: {"center_y": .5}
+                        on_release: root.send_message()
+                        theme_text_color: "Custom"
+                        text_color: app.theme_cls.primary_color
+
+        # Bottom Navigation
+        MDBottomNavigation:
+            panel_color: app.theme_cls.primary_color
+            selected_color_background: app.theme_cls.primary_light
+            text_color_active: app.theme_cls.primary_dark
+
+            MDBottomNavigationItem:
+                name: 'feed'
+                text: 'Feed'
+                icon: 'newspaper-variant'
+                on_tab_release: app.root.current = 'personal_ads'
+
+            MDBottomNavigationItem:
+                name: 'messages'
+                text: 'Messages'
+                icon: 'message'
+                on_tab_release: app.root.current = 'messages'
+
+            MDBottomNavigationItem:
+                name: 'profile'
+                text: 'Profile'
+                icon: 'account'
+                on_tab_release: app.root.current = 'profile'
+
+<ChatMessage@MDCard>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: self.minimum_height
+    padding: dp(10)
+    spacing: dp(5)
+    radius: [dp(15)]
+    
+    MDLabel:
+        text: root.message_text
+        size_hint_y: None
+        height: self.texture_size[1]
+        
+    MDLabel:
+        text: root.timestamp
+        theme_text_color: "Secondary"
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]

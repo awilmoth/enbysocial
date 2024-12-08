@@ -1,0 +1,132 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Kivy
+.kivy/
+*.kv.bak
+
+# Buildozer
+.buildozer/
+bin/
+
+# iOS build
+*.ipa
+*.app
+*.xcodeproj/
+*.xcworkspace/
+Pods/
+build-ios/
+
+# Android build
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+*.iml
+.gradle/
+android/
+
+# Cache
+.cache/
+__pycache__/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Assets
+assets/temp/
+assets/cache/
+
+# Local development
+local_settings.py
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.pyc
+.*.swp
+.*.swo
+*~.nib
+
+# Database
+*.sqlite3
+*.db
+
+# Media files
+media/
+uploads/
+
+# Certificate files
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+
+# Packaging
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Dependency directories
+node_modules/
+jspm_packages/
+bower_components/
+
+# Distribution directories
+dist/
+build/
